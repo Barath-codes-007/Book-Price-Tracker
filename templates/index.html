@@ -1,1 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Book Price Tracker</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+
+
+<body>
+ <div id="loader">
+
+    <div class="spinner"></div>
+
+    <h2>Loading Books...</h2>
+
+</div>
+
+    <header>
+
+        <h1>📚 Book Price Tracker</h1>
+        <p>Find and explore books with prices, ratings and availability.</p>
+
+    </header>
+
+    <!-- Top Bar -->
+
+    <section class="top-bar">
+
+        <input
+            type="text"
+            id="search"
+            placeholder="🔍 Search books..."
+        >
+
+        <select id="sort">
+
+            <option value="default">Sort By</option>
+            <option value="low">Price: Low → High</option>
+            <option value="high">Price: High → Low</option>
+            <option value="title">Title (A-Z)</option>
+
+        </select>
+
+        <button id="showFav">
+
+            ❤️ Favorites
+
+        </button>
+
+        <button id="darkBtn">
+
+            🌙 Dark Mode
+
+        </button>
+
+    </section>
+
+    <!-- Statistics -->
+
+    <section class="stats">
+
+        <div class="stat-card">
+            <h2 id="totalBooks">0</h2>
+            <p>Total Books</p>
+        </div>
+
+        <div class="stat-card">
+            <h2 id="avgPrice">₹0</h2>
+            <p>Average Price</p>
+        </div>
+
+        <div class="stat-card">
+            <h2 id="highestPrice">₹0</h2>
+            <p>Highest Price</p>
+        </div>
+
+        <div class="stat-card">
+            <h2 id="lowestPrice">₹0</h2>
+            <p>Lowest Price</p>
+        </div>
+
+    </section>
+
+    <!-- Chart -->
+
+    <section class="chart-box">
+
+        <h2>📊 Price Distribution</h2>
+
+        <canvas id="priceChart"></canvas>
+
+    </section>
+
+    <!-- Book Counter -->
+
+    <div class="book-count">
+
+        Showing
+        <span id="visibleBooks">0</span>
+        of
+        <span id="totalCount">{{ books|length }}</span>
+        Books
+
+    </div>
+
+    <!-- No Books Found -->
+
+    <div id="noBooks" style="display:none; text-align:center; margin:30px 0;">
+
+        <h2>😔 No Books Found</h2>
+
+        <p>Try another title.</p>
+
+    </div>
+
+    <!-- Book Cards -->
+
+    <main class="container">
+
+        {% for book in books %}
+
+        <div class="card">
+
+            <button class="fav-btn">🤍</button>
+
+            <img src="{{book['Image']}}" alt="{{book['Title']}}">
+
+            <h3>{{book['Title']}}</h3>
+
+            <p class="price">
+                💰 ₹{{book['Price (₹)']}}
+            </p>
+
+            <p class="rating">
+                ⭐ {{book['Rating']}}
+            </p>
+
+            <p class="stock">
+                {{book['Availability']}}
+            </p>
+
+        </div>
+
+        {% endfor %}
+
+    </main>
+
+    <!-- Footer -->
+
+    <footer>
+
+        <hr>
+
+        <p>Built with ❤️ by Barath</p>
+
+        <p>© 2026 Book Price Tracker</p>
+
+    </footer>
+
+    <!-- JavaScript -->
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+
+</body>
+
+</html>
